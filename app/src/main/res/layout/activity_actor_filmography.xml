@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:weightSum="100"
+              tools:background="#ffffffff"
+              tools:context="com.cooervo.filmography.GUI.ActorFilmographyActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="20"
+        android:background="#FF2DBE60"
+        android:orientation="horizontal"
+        android:weightSum="100">
+
+
+        <ImageView
+            android:id="@+id/actorProfileImage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="30"/>
+
+        <TextView
+            android:id="@+id/actorNameLabel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="70"
+            android:gravity="center_vertical"
+            android:textSize="30sp"/>
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/recyclerView"
+        android:layout_weight="80"
+        android:background="#ffffffff"
+        />
+
+</LinearLayout>

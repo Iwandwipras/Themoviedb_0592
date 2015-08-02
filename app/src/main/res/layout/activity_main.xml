@@ -1,0 +1,92 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#ffffffff"
+              android:orientation="vertical"
+              android:weightSum="100"
+              tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_weight="30"
+        >
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="40"
+        android:weightSum="100"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="20"
+            android:id="@+id/placeHolder"
+            android:orientation="vertical"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="60"
+            android:weightSum="100"
+            android:background="#FF2DBE60"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/nameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="#ffffffff"
+                android:hint="Name"
+                android:textColorHint="#a0000000"
+                android:padding="5dp"
+                android:layout_margin="10dp"
+                android:layout_weight="33"
+                android:textColor="#af000000"
+                android:textSize="30sp"
+                />
+
+
+            <EditText
+                android:id="@+id/lastnameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="#ffffffff"
+                android:hint="Last name"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:layout_weight="33"
+                android:textColorHint="#a0000000"
+                android:textColor="#af000000"
+                android:textSize="30sp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ff0fffff"
+                android:text="SEARCH"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:layout_weight="33"
+                android:id="@id/search_button"
+                android:textColor="#af000000"
+                android:textSize="30sp"/>
+
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
