@@ -1,7 +1,14 @@
 # Actors And Actresses FilmographyApp
 
 ### Main Activity:
+
+###### Portrait view
+
 ![alt text](http://i.imgur.com/utBmwE9.jpg?1 "Main Activity Snapshot")
+
+###### Landscape view
+
+![alt text](http://i.imgur.com/O2AiyQZ.jpg?1 "Main Activity Snapshot")
 
 The main activity is composed by two fields name and last name which the user must fill before searching if any of the fields is invalid the app asks the user for a new input.
 
@@ -25,7 +32,14 @@ notice: `id: 192`
 We will use the past `GET` request in the Actor Filmography Activity.
 
 ### Actor Filmography Activity:
+
+###### Portrait view
+
 ![alt text](http://i.imgur.com/EgNk8Qt.png?1 "Main Activity Snapshot")
+
+###### Landscape view
+
+![alt text](http://i.imgur.com/wYjECWH.png?1 "Main Activity Snapshot")
 
 This activity display the full filmography for the actor including not released films which have a future release date. The filmography is sorted by the films release date in ascending order. From this activity you may go back to Main Activity and search again for a new actor.
 
