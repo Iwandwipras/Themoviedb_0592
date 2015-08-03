@@ -13,19 +13,18 @@ import com.cooervo.filmography.R;
 import com.cooervo.filmography.models.Film;
 import com.squareup.picasso.Picasso;
 
-import butterknife.Bind;
-
+import java.util.List;
 
 /**
  * Create the basic adapter extending from RecyclerView.Adapter
  * note that we specify the custom ViewHolder which gives us access to our
  */
-public class FilmographyAdapter extends  RecyclerView.Adapter<FilmographyAdapter.ViewHolder>{
+public class FilmographyAdapter extends RecyclerView.Adapter<FilmographyAdapter.ViewHolder> {
 
-    private Film[] films;
+    private List<Film> films;
     private Context context;
 
-    public FilmographyAdapter(Context ctx, Film[] filmsArray){
+    public FilmographyAdapter(Context ctx, List<Film> filmsArray) {
         context = ctx;
         films = filmsArray;
     }
@@ -37,18 +36,14 @@ public class FilmographyAdapter extends  RecyclerView.Adapter<FilmographyAdapter
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView filmTitle;
-        public TextView ratingScore;
         public ImageView posterImage;
-        public TextView votesAmount;
         public TextView dateValue;
 
 
-        public ViewHolder(View itemView){
+        public ViewHolder(View itemView) {
             super(itemView);
             filmTitle = (TextView) itemView.findViewById(R.id.filmTitleLabel);
-            ratingScore = (TextView) itemView.findViewById(R.id.ratingScoreTextView);
             posterImage = (ImageView) itemView.findViewById(R.id.filmPosterImage);
-            votesAmount = (TextView) itemView.findViewById(R.id.votesLabel);
             dateValue = (TextView) itemView.findViewById(R.id.dateValue);
         }
     }
@@ -69,12 +64,10 @@ public class FilmographyAdapter extends  RecyclerView.Adapter<FilmographyAdapter
     // Populates data into the item through holder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Film film = films[position];
+        Film film = films.get(position);
 
         holder.filmTitle.setText(film.getTitle());
-        holder.ratingScore.setText(film.getRating() + "");
-        holder.votesAmount.setText(film.getVotesAmount() + "");
-        holder.dateValue.setText(film.getDate());
+        holder.dateValue.setText(film.getDate() + "");
         Picasso.with(context)
                 .load("https://image.tmdb.org/t/p/w185" + film.getPosterPath())
                 .transform(new RoundedTransformation(20, 5))
@@ -84,10 +77,10 @@ public class FilmographyAdapter extends  RecyclerView.Adapter<FilmographyAdapter
 
     @Override
     public int getItemCount() {
-        if(films==null){
+        if (films == null) {
             return 0;
         }
-        return films.length;
+        return films.size();
     }
 
 }

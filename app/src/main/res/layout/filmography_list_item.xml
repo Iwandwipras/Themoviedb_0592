@@ -50,56 +50,6 @@
                 android:orientation="horizontal"
                 android:weightSum="100">
 
-                <ImageView
-                    android:id="@+id/ratingStar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="10"
-                    android:src="@mipmap/star"/>
-
-                <TextView
-                    android:id="@+id/ratingScoreTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/ratingStar"
-                    android:layout_toRightOf="@+id/ratingStar"
-                    android:text="10"
-                    android:textColor="#bf000000"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/ratingScoreTextView"
-                    android:layout_toRightOf="@+id/ratingScoreTextView"
-                    android:paddingTop="4dp"
-                    android:text="/10"
-                    android:textColor="#80000000"/>
-
-                <TextView
-                    android:id="@+id/votesLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/textView"
-                    android:layout_toEndOf="@+id/ratingStar"
-                    android:layout_toRightOf="@+id/ratingStar"
-                    android:textColor="#80000000"/>
-
-                <TextView
-                    android:id="@+id/dateLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/votesLabel"
-                    android:layout_marginBottom="-4dp"
-                    android:layout_toEndOf="@+id/votesLabel"
-                    android:layout_toRightOf="@+id/votesLabel"
-                    android:text=" votes"
-                    android:textColor="#80000000"/>
-
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
