@@ -1,4 +1,6 @@
 # Actors And Actresses FilmographyApp
+![alt text](http://i.imgur.com/Ms9GWSO.png "Main Activity Snapshot")
+
 
 ### Main Activity:
 
