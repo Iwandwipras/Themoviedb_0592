@@ -14,11 +14,20 @@ public class Film {
 
     private String title;
     private String posterPath;
-    private Date date;
+    private String role;
 
+    private Date date;
     private String formattedDate;
 
     public Film() {
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getFormattedDate() {
@@ -36,33 +45,31 @@ public class Film {
     }
 
     /**
-     * This method receives a string representation of yyyy-MM-dd for date
-     * then it converts it to date and sets date to such date type and
-     * at the same time sets formatted date (which is a string).
-     * <p/>
-     * This method is called in onResponse() of OkHTTP and will be useful once we
-     * try to sort List<Film> filmography by Date.
+     * This method receives a string representation as "yyyy-MM-dd" for date
+     * then it converts it to date and sets date with setDate(date) method
+     * then it sets formatted date (which is a string).
      *
-     * @param formattedDate string representation of yyyy-MM-dd for date
+     * This method is called on ActorFilmographyActivity and will be useful
+     * once for sorting List<Film> filmography by Date.
+     *
+     * @param stringDate string representation of "yyyy-MM-dd" for date
      */
-
-    public void setFormattedDate(String formattedDate) {
+    public void setFormattedDate(String stringDate) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
 
-            Date unformatedDate = formatter.parse(formattedDate);
+            Date unformatedDate = formatter.parse(stringDate);
 
-            date = unformatedDate;
+            //We use setDate() method so we don't have to repeat code in filmography adapter for every film
+            setDate(unformatedDate);
 
             formattedDate = formatter.format(unformatedDate);
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public Date getDate() {

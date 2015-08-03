@@ -1,6 +1,7 @@
 package com.cooervo.filmography.GUI.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,13 +39,14 @@ public class FilmographyAdapter extends RecyclerView.Adapter<FilmographyAdapter.
         public TextView filmTitle;
         public ImageView posterImage;
         public TextView dateValue;
-
+        public TextView roleValue;
 
         public ViewHolder(View itemView) {
             super(itemView);
             filmTitle = (TextView) itemView.findViewById(R.id.filmTitleLabel);
             posterImage = (ImageView) itemView.findViewById(R.id.filmPosterImage);
             dateValue = (TextView) itemView.findViewById(R.id.dateValue);
+            roleValue = (TextView) itemView.findViewById(R.id.roleLabel);
         }
     }
 
@@ -67,13 +69,19 @@ public class FilmographyAdapter extends RecyclerView.Adapter<FilmographyAdapter.
         Film film = films.get(position);
 
         holder.filmTitle.setText(film.getTitle());
-        holder.dateValue.setText(film.getDate() + "");
+        holder.dateValue.setText(film.getFormattedDate());
+        holder.roleValue.setText(film.getRole());
         Picasso.with(context)
                 .load("https://image.tmdb.org/t/p/w185" + film.getPosterPath())
                 .transform(new RoundedTransformation(20, 5))
                 .error(R.drawable.noprofile)
                 .into(holder.posterImage);
+
+
+        Typeface latoBlack = Typeface.createFromAsset(context.getAssets(), "fonts/Lato-Black.ttf");
+        holder.filmTitle.setTypeface(latoBlack);
     }
+
 
     @Override
     public int getItemCount() {
@@ -82,5 +90,6 @@ public class FilmographyAdapter extends RecyclerView.Adapter<FilmographyAdapter.
         }
         return films.size();
     }
+
 
 }

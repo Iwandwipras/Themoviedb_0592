@@ -3,12 +3,14 @@ package com.cooervo.filmography.GUI;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cooervo.filmography.GUI.alertdialogs.AlertDialogFragment;
@@ -31,25 +33,36 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * MainActivity receives user input and searches in theMovieDB API for any result
+ */
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    @Bind(R.id.nameEditText)
-    EditText nameLabel;
-    @Bind(R.id.lastnameEditText)
-    EditText lastNameLabel;
+    //We use library Butterknife bind with less boilerplate code the views
+    @Bind(R.id.nameEditText)EditText nameLabel;
+    @Bind(R.id.lastnameEditText)EditText lastNameLabel;
+    @Bind(R.id.search_button)TextView searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Butterknife necessary method
         ButterKnife.bind(this);
+
+        setTypeFaces();
     }
 
+    /**
+     * OnClick of Search Button make a simple validation to see if
+     * both fields (actor name and last name) are valid if not it displays
+     * a not valid notification (Toast) message to the user
+     */
     @OnClick(R.id.search_button)
-    public void searchIconClick() {
+    public void searchButtonClick() {
 
         String name = nameLabel.getText().toString();
         String lastName = lastNameLabel.getText().toString();
@@ -66,9 +79,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getQuery(final String query) {
+    /**
+     * Method that uses OkHttp Library to asynchroniously retrieve response
+     * from theMovieDB REST service. Without interfering with GUI (main thread)
+     *
+     * @param actorName
+     */
+    private void getQuery(final String actorName) {
         String apiKey = "deea9711e0770caae3fc592b028bb17e";
-        String searchActorByNameUrl = "http://api.themoviedb.org/3/search/person?api_key=" + apiKey + "&query=" + query;
+        String searchActorByNameUrl = "http://api.themoviedb.org/3/search/person?api_key=" + apiKey + "&query=" + actorName;
 
         if (isNetworkAvailable()) {
 
@@ -88,17 +107,23 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onResponse(Response response) throws IOException {
-                    getActorQuery(response, query);
+                    getActorQuery(response, actorName);
                 }
 
             });
 
         } else {
-            NoInternetConnectionDialog dialog = new NoInternetConnectionDialog();
-            dialog.show(getFragmentManager(), "no_internet_error_dialog");
-
+            noInternetAlertMessage();
         }
+    }
 
+    /**
+     * Display an AlertDialog in case no internet service is available
+     * and redirect user to internet settings so the user can turn it on
+     */
+    private void noInternetAlertMessage() {
+        NoInternetConnectionDialog dialog = new NoInternetConnectionDialog();
+        dialog.show(getFragmentManager(), "no_internet_error_dialog");
     }
 
     private void getActorQuery(Response response, final String query) {
@@ -109,7 +134,8 @@ public class MainActivity extends AppCompatActivity {
 
             if (response.isSuccessful()) {
 
-                final Actor actor = getActorFrom(jsonData);
+
+                final Actor actor = parseActorFrom(jsonData); //gets Actor from JSON Data in response
 
                 MainActivity.this.runOnUiThread(new Runnable() {
 
@@ -146,11 +172,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void notFoundToast(String query) {
         String displayQuery = query.replaceAll("\\+", " ");
-        Toast.makeText(MainActivity.this, "Sorry we didn't found anything for " + displayQuery + " please try again", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "Sorry we didn't found anything for " + displayQuery
+                + " please try again", Toast.LENGTH_SHORT).show();
     }
 
 
-    private Actor getActorFrom(String jsonData) throws JSONException {
+    private Actor parseActorFrom(String jsonData) throws JSONException {
 
         JSONObject results = new JSONObject(jsonData);
         JSONArray data = results.getJSONArray("results");
@@ -159,13 +186,11 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
 
-
         JSONObject jsonActor = data.getJSONObject(0);
         Actor actor = new Actor();
         actor.setId(jsonActor.getInt("id"));
         actor.setName(jsonActor.getString("name"));
         actor.setProfilePicturePath(jsonActor.getString("profile_path"));
-
 
         return actor;
     }
@@ -188,4 +213,11 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(getFragmentManager(), "error_dialog");
     }
 
+
+    private void setTypeFaces() {
+        Typeface latoBlack = Typeface.createFromAsset(getAssets(), "fonts/Lato-Black.ttf");
+        nameLabel.setTypeface(latoBlack);
+        lastNameLabel.setTypeface(latoBlack);
+        searchButton.setTypeface(latoBlack);
+    }
 }

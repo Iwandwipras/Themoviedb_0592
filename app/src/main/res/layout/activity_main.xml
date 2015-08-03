@@ -19,23 +19,23 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="70"
-        android:weightSum="100"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="100">
 
         <LinearLayout
+            android:id="@+id/placeHolder"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="15"
-            android:id="@+id/placeHolder"
             android:orientation="vertical"/>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="70"
-            android:weightSum="100"
             android:background="#d0000000"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="100">
 
             <EditText
                 android:id="@+id/nameEditText"
@@ -43,16 +43,16 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="20"
                 android:background="#b0ffffff"
                 android:hint="Name"
-                android:textColorHint="#a0000000"
                 android:padding="5dp"
-                android:layout_weight="20"
                 android:textColor="#af000000"
-                android:textSize="30sp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"/>
+                android:textColorHint="#a0000000"
+                android:textSize="30sp"/>
 
 
             <EditText
@@ -60,32 +60,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:layout_margin="20dp"
+                android:layout_weight="20"
                 android:background="#b0ffffff"
                 android:hint="Last name"
-                android:layout_margin="20dp"
                 android:padding="5dp"
-                android:layout_weight="20"
-                android:textColorHint="#a0000000"
                 android:textColor="#af000000"
+                android:textColorHint="#a0000000"
                 android:textSize="30sp"
                 />
 
             <TextView
+                android:id="@id/search_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#407DD31E"
-                android:text="SEARCH"
-                android:gravity="center"
+                android:layout_margin="20dp"
                 android:layout_weight="50"
-                android:id="@id/search_button"
+                android:background="#407DD31E"
+                android:gravity="center"
+                android:text="SEARCH"
                 android:textColor="#ffffffff"
-                android:textSize="30sp"
-                android:layout_margin="20dp"/>
+                android:textSize="30sp"/>
 
 
         </LinearLayout>
-
-
 
 
     </LinearLayout>

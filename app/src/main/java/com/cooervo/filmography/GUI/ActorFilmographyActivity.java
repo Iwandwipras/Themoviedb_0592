@@ -2,6 +2,7 @@ package com.cooervo.filmography.GUI;
 
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,36 +32,38 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * Child activity of MainActivity which uses a RecyclerView to
+ * display as a list and sorted by date the complete
+ * filmography by actor/actress.
+ */
 public class ActorFilmographyActivity extends AppCompatActivity {
 
     public static final String TAG = ActorFilmographyActivity.class.getSimpleName();
 
+    //The views binded with library Butterknife
     @Bind(R.id.actorNameLabel)
     TextView actorLabel;
-
     @Bind(R.id.actorProfileImage)
     ImageView profileImage;
-
     @Bind(R.id.recyclerView)
     RecyclerView filmsRecyclerView;
 
+    //The actor we received from MainActivity will be used in this activity to
+    //get the actors full philmography
+    private Actor actor;
+    //List to load the films by actor
     private List<Film> filmography;
-    private int arrayIndex;
     private FilmographyAdapter adapter;
 
-    private Actor actor;
 
     private static final String API_KEY = "deea9711e0770caae3fc592b028bb17e";
-    private int totalPages;
-    OkHttpClient client = new OkHttpClient();
-    private List<String> JSONs = new ArrayList<>();
 
 
     @Override
@@ -73,24 +76,41 @@ public class ActorFilmographyActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if (intent != null) {
-            actor = (Actor) intent.getSerializableExtra("actor");
-            actorLabel.setText(actor.getName().toString());
+
+            initializeAndSetActorName(intent);
             loadActorProfilePicture();
+            getAllFilmographyForActor();
 
-            try {
-                getFilmsForActor();
+        }
+        setTypeFaces();
+    }
 
-            } catch (IOException e) {
+    private void getAllFilmographyForActor() {
+        try {
+            getFilmsForActor();
 
-                e.printStackTrace();
-            }
+        } catch (IOException e) {
 
+            e.printStackTrace();
         }
     }
 
+    private void initializeAndSetActorName(Intent intent) {
+        actor = (Actor) intent.getSerializableExtra("actor");
+        actorLabel.setText(actor.getName().toString());
+    }
+
+    /**
+     * Method that uses OkHttp library to retrieve all the filmography
+     * for current actor
+     *
+     * @throws IOException
+     */
     private void getFilmsForActor() throws IOException {
 
         String url = "https://api.themoviedb.org/3/person/" + actor.getId() + "?api_key=" + API_KEY + "&append_to_response=credits";
+
+        OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
                 .url(url)
@@ -101,7 +121,7 @@ public class ActorFilmographyActivity extends AppCompatActivity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-
+                alertUserAboutError();
             }
 
             @Override
@@ -109,62 +129,16 @@ public class ActorFilmographyActivity extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
                     String jsonData = response.body().string();
-
-                    filmography = new ArrayList<>();
-
                     try {
-                        JSONObject jsonResponse = new JSONObject(jsonData);
-                        JSONObject credits = jsonResponse.getJSONObject("credits");
-                        JSONArray cast = credits.getJSONArray("cast");
+                        filmography = parseFilmsFrom(jsonData); //Parse the film from the JSON data in response
+                        Collections.sort(filmography, new FilmComparator()); //Sort the filmography based on Date field
 
-                        Log.v(TAG, "All filmography by actor " + cast);
-
-                        for (int i = 0; i < cast.length(); i++) {
-
-                            JSONObject jsonFilm = cast.getJSONObject(i);
-
-                            Film film = new Film();
-
-                            String dateString = jsonFilm.getString("release_date");
-
-                            if (dateString != null && !dateString.equals("null")) {
-
-                                film.setTitle(jsonFilm.getString("title"));
-                                film.setPosterPath(jsonFilm.getString("poster_path"));
-                                film.setFormattedDate(dateString);
-
-                                filmography.add(film);
-                            }
-                        }
 
                         ActorFilmographyActivity.this.runOnUiThread(new Runnable() {
 
                             @Override
                             public void run() {
-
-                                if (filmography.size() > 0) {
-
-                                    Collections.sort(filmography, new FilmComparator());
-
-                                    adapter = new FilmographyAdapter(ActorFilmographyActivity.this, filmography);
-                                    filmsRecyclerView.setAdapter(adapter);
-
-                                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(ActorFilmographyActivity.this);
-
-                                    filmsRecyclerView.setLayoutManager(layoutManager);
-
-                                    filmsRecyclerView.setHasFixedSize(true);
-
-                                } else {
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(ActorFilmographyActivity.this, "Sorry we didn't find any films related to " + actor.getName(), Toast.LENGTH_LONG).show();
-
-                                        }
-                                    });
-                                }
-
+                                populateRecyclerView();
                             }
                         });
 
@@ -175,15 +149,78 @@ public class ActorFilmographyActivity extends AppCompatActivity {
 
                 }
             }
-        });
-    }
 
+            /**
+             * This method is in charge of populating the Recycler View with the data
+             * from filmography arraylist
+             */
+            private void populateRecyclerView() {
+                if (filmography.size() > 0) {
+
+                    adapter = new FilmographyAdapter(ActorFilmographyActivity.this, filmography);
+                    filmsRecyclerView.setAdapter(adapter);
+
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(ActorFilmographyActivity.this);
+
+                    filmsRecyclerView.setLayoutManager(layoutManager);
+
+                    filmsRecyclerView.setHasFixedSize(true);
+
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(ActorFilmographyActivity.this, "Sorry we didn't find any films related to " + actor.getName(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+
+            private List<Film> parseFilmsFrom(String jsonData) throws JSONException {
+
+                List<Film> tempFilmList = new ArrayList<>();
+
+                JSONObject jsonResponse = new JSONObject(jsonData);
+                JSONObject credits = jsonResponse.getJSONObject("credits");
+                JSONArray cast = credits.getJSONArray("cast");
+
+                Log.v(TAG, "All filmography by actor " + cast);
+
+                for (int i = 0; i < cast.length(); i++) {
+
+                    JSONObject jsonFilm = cast.getJSONObject(i);
+
+                    Film film = new Film();
+
+                    String dateString = jsonFilm.getString("release_date");
+
+                    if (dateString != null && !dateString.equals("null")) {
+
+                        film.setTitle(jsonFilm.getString("title"));
+                        film.setPosterPath(jsonFilm.getString("poster_path"));
+                        film.setRole(jsonFilm.getString("character"));
+                        film.setFormattedDate(dateString);
+
+                        tempFilmList.add(film);
+                    }
+                }
+                return tempFilmList;
+
+            }
+        });
+
+
+    }
 
     private void alertUserAboutError() {
         DialogFragment dialog = new AlertDialogFragment();
         dialog.show(getFragmentManager(), "error_dialog");
     }
 
+    /**
+     * We use picasso library to make easier to retrieve images from a URL
+     * and apply a default image if there's no image for the Actor/Actoress
+     */
     private void loadActorProfilePicture() {
         Picasso.with(this)
                 .load("https://image.tmdb.org/t/p/w185" + actor.getPicPath())
@@ -191,134 +228,10 @@ public class ActorFilmographyActivity extends AppCompatActivity {
                 .error(R.drawable.noprofile)
                 .into(profileImage);
     }
+
+    private void setTypeFaces() {
+        Typeface latoBlack = Typeface.createFromAsset(getAssets(), "fonts/Lato-Black.ttf");
+        actorLabel.setTypeface(latoBlack);
+    }
 }
 
- /*
-    private void getFilmographySizeAndPaginationSize() {
-        String filmographyByActorIdUrl = "http://api.themoviedb.org/3/discover/movie?with_cast="
-                + actor.getId() + "&sort_by=release_date.asc&api_key=" + API_KEY + "&page=" + 1;
-
-        OkHttpClient client = new OkHttpClient();
-        final Request request = new Request.Builder()
-                .url(filmographyByActorIdUrl)
-                .build();
-
-        Call call = client.newCall(request);
-
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Request request, IOException e) {
-                alertUserAboutError();
-            }
-
-            @Override
-            public void onResponse(Response response) throws IOException {
-
-                final String jsonData = response.body().string();
-                Log.v(TAG, "REST raw response for page " + 1 + jsonData);
-
-                try {
-                    JSONObject results = new JSONObject(jsonData);
-                    totalPages = results.getInt("total_pages");
-
-                    Log.v(TAG, "total pages=" + totalPages);
-
-                    filmography = new ArrayList<Film>();
-
-                    getFullFilmography();
-
-                    for (Film film : filmography) {
-                        Log.v("printing", film.getTitle() + " " + film.getDate());
-
-                    }
-
-                    ActorFilmographyActivity.this.runOnUiThread(new Runnable() {
-
-                        @Override
-                        public void getFilmsForActor() {
-                            if (filmography.size() > 0) {
-                                adapter = new FilmographyAdapter(ActorFilmographyActivity.this, filmography);
-                                filmsRecyclerView.setAdapter(adapter);
-
-                                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(ActorFilmographyActivity.this);
-
-                                filmsRecyclerView.setLayoutManager(layoutManager);
-
-                                filmsRecyclerView.setHasFixedSize(true);
-
-                            } else {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void getFilmsForActor() {
-                                        Toast.makeText(ActorFilmographyActivity.this, "Sorry we didn't find any films related to " + actor.getName(), Toast.LENGTH_LONG).show();
-
-                                    }
-                                });
-                            }
-                        }
-                    });
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-    private void getFullFilmography() {
-
-        for (int i = 1; i <= totalPages; i++) {
-            getResponseForPage(i);
-        }
-    }
-
-    private void getResponseForPage(final int i) {
-        final int pageNum = i;
-        String filmographyByActorIdUrl = "http://api.themoviedb.org/3/discover/movie?with_cast="
-                + actor.getId() + "&sort_by=release_date.asc&api_key=" + API_KEY + "&page=" + pageNum;
-
-
-        OkHttpClient client = new OkHttpClient();
-        final Request request = new Request.Builder()
-                .url(filmographyByActorIdUrl)
-                .build();
-
-        Call call = client.newCall(request);
-
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Request request, IOException e) {
-                alertUserAboutError();
-            }
-
-            @Override
-            public void onResponse(Response response) throws IOException {
-
-                final String jsonData = response.body().string();
-                Log.v(TAG, "ActorID= " + actor.getId() + " filmography for page " + pageNum + jsonData);
-
-                try {
-                    JSONObject results = new JSONObject(jsonData);
-                    JSONArray data = results.getJSONArray("results");
-
-                    for (int i = 0; i < data.length(); i++) {
-                        JSONObject jsonFilm = data.getJSONObject(i);
-                        Film film = new Film();
-
-                        film.setTitle(jsonFilm.getString("title"));
-                        film.setPosterPath(jsonFilm.getString("poster_path"));
-                        film.setRating(jsonFilm.getDouble("vote_average"));
-                        film.setVotesAmount(jsonFilm.getInt("vote_count"));
-                        film.setDate(jsonFilm.getString("release_date"));
-
-                        filmography.add(film);
-                        Log.v("arraylist" , "adding film " + film.getTitle() + "" + arrayIndex++ + " arraylist size=" + filmography.size());
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-    */

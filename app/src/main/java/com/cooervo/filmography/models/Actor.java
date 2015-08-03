@@ -3,9 +3,9 @@ package com.cooervo.filmography.models;
 import java.io.Serializable;
 
 /**
- * Model class for actor must implement serializable to pass
- * object actor as an intent extra in MainActivity
- * to ActorFilmographyActivity
+ * Model class for actor must implement interface
+ * Serializable to pass object actor as an intent extra
+ * FROM: MainActivity, TO: ActorFilmographyActivity.
  */
 public class Actor implements Serializable{
 

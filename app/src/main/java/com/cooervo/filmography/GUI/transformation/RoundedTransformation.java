@@ -20,8 +20,6 @@ public class RoundedTransformation implements
     private final int radius;
     private final int margin;
 
-    // radius is corner radii in dp
-    // margin is the board in dp
     public RoundedTransformation(final int radius, final int margin) {
         this.radius = radius;
         this.margin = margin;
