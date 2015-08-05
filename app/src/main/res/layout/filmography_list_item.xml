@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:background="@drawable/listbackground"
               android:orientation="vertical"
+              android:layout_margin="10dp"
               android:paddingBottom="8dp"
               android:paddingTop="8dp"
-              tools:background="#10000000"
     >
 
     <LinearLayout
@@ -23,7 +23,7 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="20"
             android:maxHeight="50dp"
-            android:src="@mipmap/ic_launcher"/>
+            />
 
         <LinearLayout
             android:id="@+id/filmInfoVerticalLayout"

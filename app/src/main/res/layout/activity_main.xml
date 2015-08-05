@@ -11,14 +11,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:layout_weight="15"
+        android:layout_weight="25"
         >
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="70"
+        android:layout_weight="50"
         android:orientation="horizontal"
         android:weightSum="100">
 
@@ -30,12 +30,14 @@
             android:orientation="vertical"/>
 
         <LinearLayout
+            android:id="@+id/mainForm"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="70"
-            android:background="#d0000000"
+            android:background="@color/blacktransparency"
             android:orientation="vertical"
-            android:weightSum="100">
+            android:weightSum="100"
+            >
 
             <EditText
                 android:id="@+id/nameEditText"
@@ -46,29 +48,14 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_weight="20"
-                android:background="#b0ffffff"
+                android:layout_weight="40"
+                android:background="@color/whitetransparency"
                 android:hint="Name"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:textColor="#af000000"
                 android:textColorHint="#a0000000"
                 android:textSize="30sp"/>
 
-
-            <EditText
-                android:id="@+id/lastnameEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="20dp"
-                android:layout_weight="20"
-                android:background="#b0ffffff"
-                android:hint="Last name"
-                android:padding="5dp"
-                android:textColor="#af000000"
-                android:textColorHint="#a0000000"
-                android:textSize="30sp"
-                />
 
             <TextView
                 android:id="@id/search_button"

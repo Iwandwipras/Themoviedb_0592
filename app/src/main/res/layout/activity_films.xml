@@ -2,9 +2,10 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@drawable/background"
               android:orientation="vertical"
               android:weightSum="100"
-              tools:context="com.cooervo.filmography.GUI.ActorFilmographyActivity">
+              tools:context="com.cooervo.filmography.controllers.activities.FilmsActivity">
 
 
     <LinearLayout
@@ -12,7 +13,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_weight="20"
-        android:background="#d0000000"
+        android:background="@color/blacktransparency"
         android:orientation="horizontal"
         android:weightSum="100">
 
@@ -35,11 +36,10 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/filmsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="80"
-        android:background="#ffffffff"
         />
 
 </LinearLayout>

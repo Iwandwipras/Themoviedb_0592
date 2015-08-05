@@ -1,4 +1,4 @@
-package com.cooervo.filmography.GUI.alertdialogs;
+package com.cooervo.filmography.controllers.alertdialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

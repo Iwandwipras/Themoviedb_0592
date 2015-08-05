@@ -1,17 +1,14 @@
 package com.cooervo.filmography.models;
 
-import java.io.Serializable;
-
 /**
- * Model class for actor must implement interface
- * Serializable to pass object actor as an intent extra
- * FROM: MainActivity, TO: ActorFilmographyActivity.
+ * Model class for the actors
  */
-public class Actor implements Serializable{
+public class Actor {
 
     private int id;
     private String name;
-    private String picPath;
+    private String picturePath;
+    private String knownForFilm;
 
     public int getId() {
         return id;
@@ -29,11 +26,19 @@ public class Actor implements Serializable{
         this.name = name;
     }
 
-    public String getPicPath() {
-        return picPath;
+    public String getPicturePath() {
+        return picturePath;
     }
 
-    public void setProfilePicturePath(String picPath) {
-        this.picPath = picPath;
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
+    }
+
+    public String getKnownForFilm() {
+        return knownForFilm;
+    }
+
+    public void setKnownForFilm(String knownForFilm) {
+        this.knownForFilm = knownForFilm;
     }
 }

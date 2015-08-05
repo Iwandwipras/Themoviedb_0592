@@ -10,4 +10,7 @@
     <string name="error_message">Sorry there seems to be a connectivity problem please try again in a moment</string>
     <string name="error_ok_button_text">EXIT</string>
     <string name="title_activity_actor_filmography">Actor Filmography Activity</string>
+    <string name="title_activity_related_actors">RelatedActorsActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

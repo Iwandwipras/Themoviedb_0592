@@ -1,4 +1,4 @@
-package com.cooervo.filmography.GUI.adapters;
+package com.cooervo.filmography.controllers.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cooervo.filmography.GUI.transformation.RoundedTransformation;
+import com.cooervo.filmography.controllers.transformation.RoundedTransformation;
 import com.cooervo.filmography.R;
 import com.cooervo.filmography.models.Film;
 import com.squareup.picasso.Picasso;
@@ -20,12 +20,12 @@ import java.util.List;
  * Create the basic adapter extending from RecyclerView.Adapter
  * note that we specify the custom ViewHolder which gives us access to our
  */
-public class FilmographyAdapter extends RecyclerView.Adapter<FilmographyAdapter.ViewHolder> {
+public class FilmsAdapter extends RecyclerView.Adapter<FilmsAdapter.ViewHolder> {
 
     private List<Film> films;
     private Context context;
 
-    public FilmographyAdapter(Context ctx, List<Film> filmsArray) {
+    public FilmsAdapter(Context ctx, List<Film> filmsArray) {
         context = ctx;
         films = filmsArray;
     }

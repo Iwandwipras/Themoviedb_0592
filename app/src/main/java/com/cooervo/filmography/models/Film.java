@@ -49,7 +49,7 @@ public class Film {
      * then it converts it to date and sets date with setDate(date) method
      * then it sets formatted date (which is a string).
      *
-     * This method is called on ActorFilmographyActivity and will be useful
+     * This method is called on FilmsActivity and will be useful
      * once for sorting List<Film> filmography by Date.
      *
      * @param stringDate string representation of "yyyy-MM-dd" for date
