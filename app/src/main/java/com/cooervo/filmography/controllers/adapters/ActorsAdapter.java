@@ -2,16 +2,13 @@ package com.cooervo.filmography.controllers.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cooervo.filmography.R;
-import com.cooervo.filmography.controllers.activities.ActorsActivity;
 import com.cooervo.filmography.controllers.activities.FilmsActivity;
 import com.cooervo.filmography.controllers.http.AsyncDownloader;
 import com.cooervo.filmography.controllers.transformation.RoundedTransformation;

@@ -8,7 +8,7 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 
 /**
- * Class to give round corners & margin/crop to actor profile picture
+ * Class to make images rounded corners & give it a margin/crop
  * first parameter is for radius, second for margin both in dp's
  */
 public class RoundedTransformation implements

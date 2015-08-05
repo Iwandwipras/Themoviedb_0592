@@ -3,7 +3,7 @@ package com.cooervo.filmography.models;
 import java.util.Comparator;
 
 /**
- * We use this class to sort films based on Dates
+ * We use this class to sort films based on Dates in ascending order
  */
 public class FilmComparator implements Comparator<Film>{
 

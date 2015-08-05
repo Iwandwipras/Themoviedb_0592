@@ -25,14 +25,35 @@
             android:layout_margin="10dp"
             android:layout_weight="30"/>
 
-        <TextView
-            android:id="@+id/actorNameLabel"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_weight="70"
-            android:gravity="center_vertical"
-            android:textSize="30sp"/>
+            android:weightSum="100"
+            android:layout_weight="70">
+
+            <TextView
+                android:id="@+id/allFilmographyTextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="25"
+                android:gravity="center_vertical"
+                android:textSize="15sp"
+                android:text="All filmography"
+                android:textColor="#a0FCC200"
+                android:typeface="sans"
+                />
+
+            <TextView
+                android:id="@+id/actorNameLabel"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="75"
+                android:gravity="center_vertical"
+                android:textSize="30sp"
+                android:layout_gravity="top"/>
+        </LinearLayout>
+
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

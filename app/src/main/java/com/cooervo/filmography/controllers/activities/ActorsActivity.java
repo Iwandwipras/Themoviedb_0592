@@ -18,6 +18,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Displays a list of actors/actresses related by the query we received in
+ * MainActivity onclick of actor it displays all films by such actor
+ */
+
 public class ActorsActivity extends AppCompatActivity {
 
     private static final String TAG = ActorsActivity.class.getSimpleName();

@@ -46,11 +46,11 @@ public class Film {
 
     /**
      * This method receives a string representation as "yyyy-MM-dd" for date
-     * then it converts it to date and sets date with setDate(date) method
+     * then it converts it to type Date and sets date with setDate(date) method
      * then it sets formatted date (which is a string).
      *
      * This method is called on FilmsActivity and will be useful
-     * once for sorting List<Film> filmography by Date.
+     * once for sorting the list of films by Date.
      *
      * @param stringDate string representation of "yyyy-MM-dd" for date
      */

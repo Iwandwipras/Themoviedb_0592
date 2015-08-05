@@ -1,6 +1,5 @@
 package com.cooervo.filmography.controllers.activities;
 
-import android.app.DialogFragment;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
@@ -11,12 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cooervo.filmography.controllers.alertdialogs.AlertDialogFragment;
 import com.cooervo.filmography.controllers.alertdialogs.NoInternetConnectionDialog;
 import com.cooervo.filmography.R;
 import com.cooervo.filmography.controllers.http.AsyncDownloader;
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,6 +20,9 @@ import butterknife.OnClick;
 
 /**
  * MainActivity receives user input and searches in theMovieDB API for any result
+ * related results, for example searching "brody", will give a list of actors
+ * sorted by popularity with the name or last name brody, so Adriend Brody is the first result but
+ * other actors with such lastname will appear
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     //We use library Butterknife bind with less boilerplate code the views
     @Bind(R.id.nameEditText)EditText nameLabel;
     @Bind(R.id.search_button)TextView searchButton;
+    @Bind(R.id.poweredTextView)TextView poweredBy;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,5 +93,6 @@ public class MainActivity extends AppCompatActivity {
         Typeface latoBlack = Typeface.createFromAsset(getAssets(), "fonts/Lato-Black.ttf");
         nameLabel.setTypeface(latoBlack);
         searchButton.setTypeface(latoBlack);
+        poweredBy.setTypeface(latoBlack);
     }
 }

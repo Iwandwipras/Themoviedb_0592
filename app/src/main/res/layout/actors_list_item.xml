@@ -81,17 +81,42 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="55"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:weightSum="100">
 
             <TextView
                 android:id="@+id/knownFor"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="top"
+                android:layout_weight="50"
                 android:text="XXXX xxx xxxxxxxx"
                 android:textColor="@color/textcolor"
                 android:textSize="18sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="-15dp"
+                android:layout_weight="50"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/filmsIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:src="@drawable/films_ic"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="Full filmography"
+                    android:layout_marginLeft="-4dp"
+                    android:textColor="@color/textcolor"/>
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -14,6 +14,7 @@ import com.cooervo.filmography.controllers.adapters.FilmsAdapter;
 import com.cooervo.filmography.R;
 import com.cooervo.filmography.controllers.transformation.RoundedTransformation;
 import com.cooervo.filmography.models.Film;
+import com.cooervo.filmography.models.FilmComparator;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -21,13 +22,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Child activity of MainActivity which uses a RecyclerView to
+ * Child activity of ActorsActivity which uses a RecyclerView to
  * display as a list and sorted by date the complete
  * films by actor/actress.
  */
@@ -36,17 +39,12 @@ public class FilmsActivity extends AppCompatActivity {
     public static final String TAG = FilmsActivity.class.getSimpleName();
 
     //The views binded with library Butterknife
-    @Bind(R.id.actorNameLabel)
-    TextView actorLabel;
-    @Bind(R.id.actorProfileImage)
-    ImageView actorPicture;
-    @Bind(R.id.filmsRecyclerView)
-    RecyclerView filmsRecyclerView;
+    @Bind(R.id.actorNameLabel)TextView actorLabel;
+    @Bind(R.id.actorProfileImage)ImageView actorPicture;
+    @Bind(R.id.filmsRecyclerView)RecyclerView filmsRecyclerView;
 
     //List to load the films by actor
     private List<Film> films;
-
-    private static final String API_KEY = "deea9711e0770caae3fc592b028bb17e";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +72,7 @@ public class FilmsActivity extends AppCompatActivity {
         try {
             jsonResponse = new JSONObject(jsonData);
 
-            actorLabel.setText(jsonResponse.getString("name"));
-            Picasso.with(this)
-                    .load("https://image.tmdb.org/t/p/w185" + jsonResponse.getString("profile_path"))
-                    .transform(new RoundedTransformation(20, 5))
-                    .error(R.drawable.noprofile)
-                    .into(actorPicture);
+            setActorNameAndPicture(jsonResponse);
 
             JSONObject credits = jsonResponse.getJSONObject("credits");
             JSONArray cast = credits.getJSONArray("cast");
@@ -110,9 +103,21 @@ public class FilmsActivity extends AppCompatActivity {
                     films.add(film);
                 }
             }
+
+            Collections.sort(films, new FilmComparator());
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setActorNameAndPicture(JSONObject jsonResponse) throws JSONException {
+        actorLabel.setText(jsonResponse.getString("name"));
+        Picasso.with(this)
+                .load("https://image.tmdb.org/t/p/w185" + jsonResponse.getString("profile_path"))
+                .transform(new RoundedTransformation(20, 5))
+                .error(R.drawable.noprofile)
+                .into(actorPicture);
     }
 
 
@@ -131,6 +136,7 @@ public class FilmsActivity extends AppCompatActivity {
     private void setTypeFaces() {
         Typeface latoBlack = Typeface.createFromAsset(getAssets(), "fonts/Lato-Black.ttf");
         actorLabel.setTypeface(latoBlack);
+
     }
 
     private void showNotFoundNotification() {

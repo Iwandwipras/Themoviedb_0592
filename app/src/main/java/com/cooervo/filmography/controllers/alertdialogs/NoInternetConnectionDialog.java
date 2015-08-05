@@ -34,7 +34,7 @@ public class NoInternetConnectionDialog extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 Intent networkSetting = new Intent(
-                                        Settings.ACTION_NETWORK_OPERATOR_SETTINGS);
+                                        Settings.ACTION_WIRELESS_SETTINGS);
                                 startActivity(networkSetting);
                             }
                         });

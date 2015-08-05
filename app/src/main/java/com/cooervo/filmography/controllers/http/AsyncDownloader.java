@@ -15,12 +15,13 @@ import java.io.IOException;
 /**
  * Public class to be re used for downloading JSON response using library
  * OkHttp.
- * <p/>
- * We extend AsyncTask because:
- * An asynchronous task is defined by a computation that runs on a background
- * thread and whose result is published on the UI thread. An asynchronous task is defined
- * by 3 generic types, called Params, Progress and Result,
- * and 4 steps, called onPreExecute, doInBackground, onProgressUpdate and onPostExecute.
+ *
+ * We extend AsyncTask because so we can make an Asynchronous call to retrieve the
+ * response from theMovieDB.org API without affecting the GUI.
+ *
+ * Also this class is reused in the application to reduce boiler plate code. If needed we can subclass
+ * this class and override method onPostExecute() which can be used to do specific things in the
+ * main thread (GUI).
  */
 public class AsyncDownloader extends AsyncTask<String, Integer, String> {
 
@@ -39,6 +40,8 @@ public class AsyncDownloader extends AsyncTask<String, Integer, String> {
 
     /**
      * onPreExecute runs on the UI thread before doInBackground.
+     * This will start showing a small dialog that says Loading with a spinner
+     * to let the user know download is in progress
      */
     @Override
     protected void onPreExecute() {
@@ -53,7 +56,9 @@ public class AsyncDownloader extends AsyncTask<String, Integer, String> {
 
     /**
      * doInBackground() runs in the background on a worker thread. This is where code that can block the GUI should go.
-     *
+     *  Since we are using asynctask this is already in background threas we use okHttp method
+     *  call.execute() which executes in current thread (which is the background threas of this Async class)
+     *  Once we finish retrieving jsonData it is passed to method onPostExecute()
      * @param params
      * @return
      */
@@ -89,21 +94,11 @@ public class AsyncDownloader extends AsyncTask<String, Integer, String> {
     }
 
     /**
-     * onProgressUpdate this is called in the UI thread when you call publishProgress.
-     * It’s a good place to update progress dialogs and show the user that things are
-     * still working.
+     * onPostExecute runs on the  main (GUI) thread and receives
+     * the result of doInBackground.
      *
-     * @param values
-     */
-    @Override
-    protected void onProgressUpdate(Integer... values) {
-
-        super.onProgressUpdate(values);
-    }
-
-    /**
-     * onPostExecute runs on the UI thread and will be delivered
-     * the result of doInBackground
+     * Here we pass a string representation of jsonData to the child/receiver
+     * activity.
      *
      * @param jsonData
      */

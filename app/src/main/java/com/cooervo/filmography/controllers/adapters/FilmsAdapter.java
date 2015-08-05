@@ -56,7 +56,7 @@ public class FilmsAdapter extends RecyclerView.Adapter<FilmsAdapter.ViewHolder> 
 
         // Inflate the custom layout
         View view = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.filmography_list_item,
+                inflate(R.layout.films_list_item,
                         parent,
                         false);
 
