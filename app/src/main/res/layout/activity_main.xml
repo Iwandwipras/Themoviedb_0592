@@ -21,7 +21,7 @@
             android:layout_height="0dp"
             android:weightSum="100"
             android:layout_weight="50"
-            android:background="@color/blacktransparency">
+            android:background="@color/darkholder">
 
             <TextView
                 android:layout_width="0dp"
@@ -63,7 +63,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="70"
-            android:background="@color/blacktransparency"
+            android:background="@color/darkholder"
             android:orientation="vertical"
             android:weightSum="100"
             >
@@ -78,7 +78,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="40"
-                android:background="@color/whitetransparency"
+                android:background="@color/itemsholder"
                 android:hint="Name"
                 android:padding="10dp"
                 android:textColor="#af000000"

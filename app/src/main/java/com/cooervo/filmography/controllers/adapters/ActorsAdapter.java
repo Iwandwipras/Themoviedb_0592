@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.cooervo.filmography.R;
 import com.cooervo.filmography.controllers.activities.FilmsActivity;
 import com.cooervo.filmography.controllers.http.AsyncDownloader;
+import com.cooervo.filmography.controllers.http.MovieDbUrl;
 import com.cooervo.filmography.controllers.transformation.RoundedTransformation;
 import com.cooervo.filmography.models.Actor;
 import com.squareup.picasso.Picasso;
@@ -58,11 +59,11 @@ public class ActorsAdapter extends RecyclerView.Adapter<ActorsAdapter.ViewHolder
 
             int actorUniqueId = actors.get(position).getId();
 
-            String apiKey = "deea9711e0770caae3fc592b028bb17e";
-            String searchActorByNameUrlAndSortByPopularity = "https://api.themoviedb.org/3/person/" + actorUniqueId + "?api_key=" + apiKey + "&append_to_response=credits";
+            MovieDbUrl url = MovieDbUrl.getInstance();
+            String getFilmographyHttpMethod = url.getFilmographyQuery(actorUniqueId);
 
             AsyncDownloader downloader = new AsyncDownloader(context, new FilmsActivity().getClass());
-            downloader.execute(searchActorByNameUrlAndSortByPopularity);
+            downloader.execute(getFilmographyHttpMethod);
 
         }
     }

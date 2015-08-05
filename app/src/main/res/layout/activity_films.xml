@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_weight="20"
-        android:background="@color/blacktransparency"
+        android:background="@color/darkholder"
         android:orientation="horizontal"
         android:weightSum="100">
 

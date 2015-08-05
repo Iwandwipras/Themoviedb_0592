@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.cooervo.filmography.controllers.alertdialogs.NoInternetConnectionDialog;
 import com.cooervo.filmography.R;
 import com.cooervo.filmography.controllers.http.AsyncDownloader;
+import com.cooervo.filmography.controllers.http.MovieDbUrl;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -60,11 +61,12 @@ public class MainActivity extends AppCompatActivity {
         String actorNameToSearch = nameLabel.getText().toString();
 
         if(actorNameToSearch.length() >= 2){
-            String apiKey = "deea9711e0770caae3fc592b028bb17e";
-            String searchActorByNameUrlAndSortByPopularity = "http://api.themoviedb.org/3/search/person?api_key=" + apiKey + "&query=" + actorNameToSearch + "&sort_by=popularity";
+
+            MovieDbUrl url = MovieDbUrl.getInstance();
+            String getActorHttpMethod = url.getActorQuery(actorNameToSearch);
 
             AsyncDownloader downloader = new AsyncDownloader(this, new ActorsActivity().getClass());
-            downloader.execute(searchActorByNameUrlAndSortByPopularity);
+            downloader.execute(getActorHttpMethod);
 
         } else {
             Toast.makeText(this, "Invalid actor/actress name, please try again", Toast.LENGTH_SHORT).show();
