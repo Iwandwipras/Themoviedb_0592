@@ -6,11 +6,9 @@
 
 ###### Portrait view
 
-![alt text](http://i.imgur.com/utBmwE9.jpg?1 "Main Activity Snapshot")
+![alt text](http://i.imgur.com/Fp2qEYH.jpg?1 "Main Activity Snapshot")
 
-###### Landscape view
 
-![alt text](http://i.imgur.com/O2AiyQZ.jpg?1 "Main Activity Snapshot")
 
 The main activity is composed by two fields name and last name which the user must fill before searching if any of the fields is invalid the app asks the user for a new input.
 
@@ -33,19 +31,26 @@ notice: `id: 192`
 
 We will use the past `GET` request in the Actor Filmography Activity.
 
-### Actor Filmography Activity:
+### Actors Activity:
 
 ###### Portrait view
 
-![alt text](http://i.imgur.com/EgNk8Qt.png?1 "Main Activity Snapshot")
+![alt text](http://i.imgur.com/v0N9Cjw.jpg?1)
 
-###### Landscape view
+This activities display actors/actresses related to the search query. On click of item it will show you full actor filmography.
 
-![alt text](http://i.imgur.com/wYjECWH.png?1 "Main Activity Snapshot")
 
-This activity display the full filmography for the actor including not released films which have a future release date. The filmography is sorted by the films release date in ascending order. From this activity you may go back to Main Activity and search again for a new actor.
+
+### Films Activity:
+
+###### Portrait view
+
+![alt text](http://i.imgur.com/wEUY9f5.jpg?1 )
+
+This activity display the full filmography for the actor including not released films which have a future release date. The filmography is sorted by the films release date in ascending order. 
 
 Once we retrieve the filmography for our desired actor/actress we parse the JSON response and display images for the actor/actress and it's films, a placeholder is used in case no poster is found for a movie.
+
 
 ### REST services from theMovieDB API
 
