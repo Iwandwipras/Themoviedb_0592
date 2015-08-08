@@ -61,11 +61,3 @@ The app also uses third party libraries such as:
 * **Butterknife** for injecting views with less boilerplate code.
 * **Picasso** for easily fetching images from URL's.
 * **OkHTTP** for easy HTTP connectivity.
-
-### To do (bucket) list:
-- [ ] include theMovieDB attribution
-- [ ] publish in play store :)
-- [ ] prepare Images for play store listing without actors/actresses images nor poster, to not violate any play store policies.
-
-
-
